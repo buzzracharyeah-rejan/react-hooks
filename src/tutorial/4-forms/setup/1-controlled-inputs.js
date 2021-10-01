@@ -13,7 +13,7 @@ const ControlledInputs = () => {
   const handleSubmit = event => {
     event.preventDefault();
     if(firstName && email) {
-      const person = {firstName, email};
+      // const person = {firstName, email};
       setPeople((prevValue) => {
         return [...prevValue, {id: Math.random(), firstName, email}]; 
       });
