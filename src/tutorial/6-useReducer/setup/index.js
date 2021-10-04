@@ -1,5 +1,7 @@
 import React, {useState, useReducer} from 'react'; 
+import { MdDelete } from "react-icons/md";
 import Modal from './Modal'
+import {reducer} from './reducer';
 const defState = {
   people: [], 
   isModal: false, 
@@ -9,37 +11,6 @@ const Index = () => {
   // const [showModal, setShowModal] = useState(false); 
   // const [modalContent, setModalContent] = useState('say hello');
   
-const reducer = (state, action) => {
-  // console.log(state);
-  switch(action.type) {
-    case 'ADD_PEOPLE': 
-    return {
-      ...state,
-      people: [...state.people, action.payload], 
-      isModal: true, 
-      modalContent: 'person added', 
-    }
-
-    case 'NO_VALUE': 
-    return {
-      ...state, 
-      isModal: true, 
-      modalContent: 'empty person'
-    }
-
-    case 'CLOSE_MODAL': 
-    return {
-      ...state, 
-      isModal: false, 
-      modalContent: ''
-    }
-
-    default: 
-    throw new Error('invalid choice');
-
-  }
-
-}
 
 const closeModal = () => {
   console.log('close modal');
@@ -77,8 +48,14 @@ const closeModal = () => {
         <button>submit</button> 
       </form>
       {state.people.map(person => (
-        <div key={person.id}>
+        <div key={person.id} className='item'>
           <h4>{person.name}</h4>
+          <button onClick={() => dispatch({
+            type: 'DELETE_PERSON',
+            payload: {id: person.id}
+            })}>
+          <MdDelete />
+          </button>
         </div>
       ))}
     </React.Fragment>
