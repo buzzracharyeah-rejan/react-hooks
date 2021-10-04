@@ -18,18 +18,32 @@ const reducer = (state, action) => {
       people: [...state.people, action.payload], 
       isModal: true, 
       modalContent: 'person added', 
-  }
+    }
+
     case 'NO_VALUE': 
     return {
       ...state, 
       isModal: true, 
       modalContent: 'empty person'
     }
+
+    case 'CLOSE_MODAL': 
+    return {
+      ...state, 
+      isModal: false, 
+      modalContent: ''
+    }
+
     default: 
     throw new Error('invalid choice');
 
   }
 
+}
+
+const closeModal = () => {
+  console.log('close modal');
+  dispatch({type: 'CLOSE_MODAL'}); 
 }
 
   const [name,setName] = useState(''); 
@@ -53,7 +67,9 @@ const reducer = (state, action) => {
   }
   return (
     <React.Fragment>
-      {state.isModal && <Modal modalContent={state.modalContent}/>}
+      {state.isModal && <Modal
+      modalContent={state.modalContent}
+      closeModal={closeModal}/>}
       <form className='form' onSubmit={submitHandler}>
         <label htmlFor="name">Name</label>
         <input type="text" id='name' value={name}
