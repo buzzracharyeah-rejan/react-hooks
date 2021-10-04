@@ -12,13 +12,19 @@ const Index = () => {
 const reducer = (state, action) => {
   // console.log(state);
   switch(action.type) {
-    case 'add': 
-    return {...state, people: [...state.people,
-      {id: new Date().getTime().toString(), name},
-    ], 
-    isModal: true, 
-    modalContent: 'person added', 
+    case 'ADD_PEOPLE': 
+    return {
+      ...state,
+      people: [...state.people, action.payload], 
+      isModal: true, 
+      modalContent: 'person added', 
   }
+    case 'NO_VALUE': 
+    return {
+      ...state, 
+      isModal: true, 
+      modalContent: 'empty person'
+    }
     default: 
     throw new Error('invalid choice');
 
@@ -32,7 +38,18 @@ const reducer = (state, action) => {
 
   const submitHandler = e => {
     e.preventDefault(); 
-    dispatch({type: 'add'})
+    if(name.trim()) {
+      dispatch({
+        type: 'ADD_PEOPLE',
+        payload: {id: new Date().getTime().toString(),name}
+      });
+      setName('');
+    } else { 
+      dispatch({
+        type: 'NO_VALUE',
+      });
+
+    }
   }
   return (
     <React.Fragment>
