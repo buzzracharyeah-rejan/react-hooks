@@ -22,18 +22,20 @@ const ReactRouterSetup = () => {
           <About />
         </Route>
 
-        <Route path='/people'>
+        <Route path='/people' exact>
           <People />
         </Route>
 
-        <Route>
+        <Route path="/people/:id" children={<Person />} />
+
+        <Route path='*'>
           <Error />
         </Route>
 
       </Switch>
 
     </Router>
-    );
+  );
 };
 
 export default ReactRouterSetup;
